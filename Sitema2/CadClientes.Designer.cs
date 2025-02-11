@@ -77,7 +77,7 @@
             this.textBoxNomeCompleto.Name = "textBoxNomeCompleto";
             this.textBoxNomeCompleto.Size = new System.Drawing.Size(281, 26);
             this.textBoxNomeCompleto.TabIndex = 1;
-            
+            this.textBoxNomeCompleto.TextChanged += new System.EventHandler(this.textBoxNomeCompleto_TextChanged);
             // 
             // label3
             // 

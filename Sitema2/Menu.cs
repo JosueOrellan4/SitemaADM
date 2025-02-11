@@ -39,5 +39,12 @@ namespace Sitema2
             CadCarros form = new CadCarros();
             form.ShowDialog();
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Gerenciamento_Clientes form = new Gerenciamento_Clientes();
+            form.ShowDialog();
+
+        }
     }
 }

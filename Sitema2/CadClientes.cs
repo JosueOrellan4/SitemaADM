@@ -148,5 +148,10 @@ namespace Sitema2
             int digito2 = resto < 2 ? 0 : 11 - resto;
             return digito2 == int.Parse(cpf[10].ToString());
         }
+
+        private void textBoxNomeCompleto_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
