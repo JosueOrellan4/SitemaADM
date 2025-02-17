@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,19 +8,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
+
 namespace Sitema2
 {
-    public partial class Gerenciamento_Clientes : Form
+    public partial class Gerenciamento_Carros: Form
     {
-        public Gerenciamento_Clientes()
+        public Gerenciamento_Carros()
         {
             InitializeComponent();
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void buttonFechar_Click(object sender, EventArgs e)
         {
-
+            this.Close();
         }
 
         private void buttonPesquisarClientes_Click(object sender, EventArgs e)
@@ -35,7 +36,7 @@ namespace Sitema2
                     //Abre conexão
                     consulta.Open();
                     //Consulta SQL para selecionar Clientes
-                    string listagem = "SELECT Id_Cliente, NomeCompleto, Telefone FROM tb_clientes";
+                    string listagem = "SELECT Id_Carro, Proprietario, Telefone, Cpf, Placa, Ano, Chassi, Cor, Marca, Modelo, Acessorios, Valor FROM tb_Carros";
 
                     //Cria o comando MySql
                     using (MySqlCommand cmd = new MySqlCommand(listagem, consulta))
@@ -49,7 +50,7 @@ namespace Sitema2
                         dadosClientes.Load(reader);
 
                         //Atribui a tabela de dados ao dataGridView
-                        dgvClientes.DataSource = dadosClientes;
+                        dgvCarros.DataSource = dadosClientes;
 
 
 
@@ -59,18 +60,18 @@ namespace Sitema2
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro ao listar os clientes: " + ex.Message);
+                MessageBox.Show("Erro ao listar os carros: " + ex.Message);
             }
 
         }
 
         private void buttonRemoverClientes_Click(object sender, EventArgs e)
         {
-            if (dgvClientes.SelectedRows.Count > 0)
+            if (dgvCarros.SelectedRows.Count > 0)
             {
-                int clienteID = Convert.ToInt32(dgvClientes.SelectedRows[0].Cells["Id_Cliente"].Value);
+                int carroID = Convert.ToInt32(dgvCarros.SelectedRows[0].Cells["Id_Carro"].Value);
 
-                DialogResult result = MessageBox.Show("Tem certeza que deseja excluir este cliente?",
+                DialogResult result = MessageBox.Show("Tem certeza que deseja excluir este carro?",
                     "Confirmar Exclusão", MessageBoxButtons.YesNo);
 
                 if (result == DialogResult.Yes)
@@ -85,22 +86,22 @@ namespace Sitema2
                         {
                             //Abre conexão
                             consulta.Open();
-                            //Consulta SQL para selecionar Clientes
-                            string listagem = "DELETE FROM tb_clientes WHERE Id_Cliente = @Id_Cliente";
+                            //Consulta SQL para selecionar 
+                            string listagem = "DELETE FROM tb_carros WHERE Id_Carro = @Id_Carro";
 
                             using (MySqlCommand cmd = new MySqlCommand(listagem, consulta))
                             {
-                                cmd.Parameters.AddWithValue("Id_Cliente", clienteID);
+                                cmd.Parameters.AddWithValue("Id_Carro", carroID);
 
                                 int rowsAffected = cmd.ExecuteNonQuery();
 
                                 if (rowsAffected > 0)
                                 {
-                                    MessageBox.Show("Cliente excluido com sucesso!");
+                                    MessageBox.Show("Carro excluido com sucesso!");
                                 }
                                 else
                                 {
-                                    MessageBox.Show("Falha ao excluir o cliente");
+                                    MessageBox.Show("Falha ao excluir o carro");
                                 }
 
                             }
@@ -118,14 +119,9 @@ namespace Sitema2
                 }
                 else
                 {
-                    MessageBox.Show("Por favor, Selecione um cliente para excluir");
+                    MessageBox.Show("Por favor, Selecione um carro para excluir");
                 }
             }
-        }
-
-        private void buttonFechar_Click(object sender, EventArgs e)
-        {
-            this.Close();
         }
     }
 }

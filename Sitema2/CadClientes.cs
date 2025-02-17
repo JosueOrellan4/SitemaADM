@@ -39,22 +39,22 @@ namespace Sitema2
         {
             string cpf = maskedTextBoxCPF.Text;
 
-            if (ValidarCpf(cpf))
+            // Verifica se o CPF é válido antes de continuar
+            if (!ValidarCpf(cpf))
             {
-                labelAlert.Text = "CPF VÁLIDO";
-                labelAlert.ForeColor = Color.Green;
-            }
-            else
-            {
-
                 labelAlert.Text = "CPF INVÁLIDO";
                 labelAlert.ForeColor = Color.Red;
                 maskedTextBoxCPF.Text = "";
                 maskedTextBoxCPF.Focus();
+                return; // Interrompe a execução para impedir que o CPF inválido seja cadastrado
             }
 
+            // Se o CPF for válido, exibe a mensagem e continua com o cadastro
+            labelAlert.Text = "CPF VÁLIDO";
+            labelAlert.ForeColor = Color.Green;
+
             //Defina sua string de conexão com o banco
-            string conexaoString = "Server=localhost; Port=3306; Database=bd_sistema; Uid=root; Pwd=;";
+            string conexaoString = "Server=localhost; Port=3306; Database=db_sistema; Uid=root; Pwd=;";
 
             //Defina a inserção de registro no BD
 
@@ -150,6 +150,11 @@ namespace Sitema2
         }
 
         private void textBoxNomeCompleto_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void maskedTextBoxCPF_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
         {
 
         }

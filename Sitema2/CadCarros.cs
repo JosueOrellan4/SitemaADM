@@ -61,7 +61,7 @@ namespace Sitema2
             textBoxProprietario.Text = "";
             maskedTextBoxCpf.Text = "";
             maskedTextBoxTelefone.Text = "";
-            textBoxPlaca.Text = "";
+            maskedTextBoxPlaca.Text = "";
             maskedTextBoxAno.Text = "";
             maskedTextBoxChassi.Text = "";
             textBoxCor.Text = "";
@@ -81,22 +81,23 @@ namespace Sitema2
         {
             string cpf = maskedTextBoxCpf.Text;
 
-            if (ValidarCpf(cpf))
+            // Verifica se o CPF é válido antes de continuar
+            if (!ValidarCpf(cpf))
             {
-                labelAlert.Text = "CPF VÁLIDO";
-                labelAlert.ForeColor = Color.Green;
-            }
-            else
-            {
-
                 labelAlert.Text = "CPF INVÁLIDO";
                 labelAlert.ForeColor = Color.Red;
                 maskedTextBoxCpf.Text = "";
                 maskedTextBoxCpf.Focus();
+                return; // Interrompe a execução para impedir que o CPF inválido seja cadastrado
             }
 
+            // Se o CPF for válido, exibe a mensagem e continua com o cadastro
+            labelAlert.Text = "CPF VÁLIDO";
+            labelAlert.ForeColor = Color.Green;
+
+
             //Defina sua string de conexão com o banco
-            string conexaoString = "Server=localhost; Port=3306; Database=bd_sistema; Uid=root; Pwd=;";
+            string conexaoString = "Server=localhost; Port=3306; Database=db_sistema; Uid=root; Pwd=;";
 
             //Defina a inserção de registro no BD
 
@@ -119,7 +120,7 @@ namespace Sitema2
                         comando.Parameters.AddWithValue("@Proprietario", textBoxProprietario.Text);
                         comando.Parameters.AddWithValue("@Telefone", maskedTextBoxTelefone.Text);
                         comando.Parameters.AddWithValue("@Cpf", maskedTextBoxCpf.Text);
-                        comando.Parameters.AddWithValue("@Placa", textBoxPlaca.Text);
+                        comando.Parameters.AddWithValue("@Placa", maskedTextBoxPlaca.Text);
                         comando.Parameters.AddWithValue("@Ano", maskedTextBoxAno.Text);
                         comando.Parameters.AddWithValue("@Chassi", maskedTextBoxChassi.Text);
                         comando.Parameters.AddWithValue("@Cor", textBoxCor.Text);
@@ -136,7 +137,7 @@ namespace Sitema2
                         textBoxProprietario.Text = "";
                         maskedTextBoxTelefone.Text = "";
                         maskedTextBoxCpf.Text = "";
-                        textBoxPlaca.Text = "";
+                        maskedTextBoxPlaca.Text = "";
                         maskedTextBoxAno.Text = "";
                         maskedTextBoxChassi.Text = "";
                         labelAlert.Text = "";
